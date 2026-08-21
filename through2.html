@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Through Harsh's Lens | Harsh Barve</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'></text></svg>">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/fraunces@5/300.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/fraunces@5/400.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/fraunces@5/600.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/fraunces@5/300-italic.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/fraunces@5/400-italic.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/manrope@5/400.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/manrope@5/500.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/manrope@5/600.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/manrope@5/700.css">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<style>
+:root{--bg:#0b0b0c;--sf:#131315;--sf2:#1a1a1d;--ln:rgba(236,231,222,.09);--ln2:rgba(236,231,222,.18);--ink:#eae6dd;--ink2:#a49e93;--ink3:#6e6960;--gold:#c8a171;--red:#d99090;--serif:'Fraunces',Georgia,serif;--sans:'Manrope',system-ui,sans-serif;--hh:68px;--wrap:1440px}
+*{margin:0;padding:0;box-sizing:border-box}[hidden]{display:none!important}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--ink);font:400 15px/1.65 var(--sans);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+body.locked{overflow:hidden}::selection{background:var(--gold);color:var(--bg)}
+a{color:inherit;text-decoration:none}button{font-family:var(--sans);cursor:pointer;border:none;background:none;color:inherit}img{max-width:100%;display:block}
+.wrap{max-width:var(--wrap);margin:0 auto;padding:0 clamp(16px,3vw,32px)}
+body::after{content:"";position:fixed;inset:0;z-index:998;pointer-events:none;opacity:.045;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E")}
+.fade-up{opacity:0;transform:translateY(16px);transition:opacity .8s ease,transform .8s ease}.fade-up.in{opacity:1;transform:none}
+@media(prefers-reduced-motion:reduce){.fade-up{opacity:1;transform:none;transition:none}html{scroll-behavior:auto}}
+
+/* ─ header ── */
+.hdr{position:fixed;top:0;left:0;right:0;height:var(--hh);z-index:100;display:flex;align-items:center;transition:background .35s,border-color .35s;border-bottom:1px solid transparent}
+.hdr.scrolled{background:rgba(11,11,12,.88);backdrop-filter:blur(14px);border-color:var(--ln)}
+.hdr-in{width:100%;display:flex;justify-content:space-between;align-items:center}
+.logo{font:400 1.2rem var(--serif)}.logo em{font-style:italic;color:var(--gold)}
+.nav{display:flex;gap:clamp(16px,3vw,30px)}
+.nav a{font:600 .68rem/1 var(--sans);letter-spacing:.16em;text-transform:uppercase;color:var(--ink2);transition:color .2s;position:relative;padding:6px 0}
+.nav a::after{content:'';position:absolute;bottom:0;left:0;width:0;height:1px;background:var(--gold);transition:width .3s}
+.nav a:hover,.nav a.active{color:var(--ink)}.nav a:hover::after,.nav a.active::after{width:100%}
+
+.page{display:none}.page.active{display:block}
+
+/* ── hero (full bleed) ── */
+.hero{position:relative;height:100svh;min-height:620px;overflow:hidden}
+.hero-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;animation:kb 10s ease-out forwards}
+@keyframes kb{from{transform:scale(1.09)}to{transform:scale(1.01)}}
+.hero-shade{position:absolute;inset:0;background:linear-gradient(to top,rgba(11,11,12,.94) 0%,rgba(11,11,12,.28) 42%,rgba(11,11,12,.42) 100%)}
+.hero-in{position:absolute;left:0;right:0;bottom:0;padding-bottom:clamp(56px,9vh,96px)}
+.eyebrow{display:flex;align-items:center;gap:12px;font:600 .64rem/1 var(--sans);letter-spacing:.22em;text-transform:uppercase;color:var(--ink2);margin-bottom:18px}
+.eyebrow::before{content:'';width:32px;height:1px;background:var(--gold)}
+.hero h1{font:300 clamp(2.9rem,8.6vw,6.8rem)/.98 var(--serif);letter-spacing:-.02em}
+.hero h1 em{font-style:italic;color:var(--gold)}
+.hero-meta{display:flex;align-items:center;gap:16px;margin-top:26px;font:600 .66rem/1 var(--sans);letter-spacing:.18em;text-transform:uppercase;color:var(--ink2)}
+.hero-meta i{width:1px;height:14px;background:var(--ln2)}
+.hero-latest{position:absolute;right:clamp(16px,3vw,32px);bottom:clamp(56px,9vh,96px);max-width:260px;text-align:right;font:400 italic .95rem/1.5 var(--serif);color:var(--ink2)}
+.hero-latest b{display:block;font:700 .58rem/2 var(--sans);letter-spacing:.2em;text-transform:uppercase;color:var(--gold)}
+.scroll-hint{position:absolute;bottom:0;left:50%;width:1px;height:64px;background:rgba(255,255,255,.14);overflow:hidden}
+.scroll-hint::after{content:'';position:absolute;left:0;width:1px;height:45%;background:var(--gold);animation:drip 2.4s ease-in-out infinite}
+@keyframes drip{0%{top:-45%}100%{top:110%}}
+
+/* ── frosted filter bar ─ */
+.fbar{position:sticky;top:0;z-index:60;background:rgba(11,11,12,.78);backdrop-filter:blur(16px);border-bottom:1px solid var(--ln);padding:14px 0}
+.fbar-in{display:flex;justify-content:space-between;align-items:center;gap:16px}
+.chips{display:flex;gap:8px;overflow-x:auto;scrollbar-width:none}.chips::-webkit-scrollbar{display:none}
+.chip{flex:none;padding:8px 15px;border-radius:99px;border:1px solid var(--ln);font:600 .64rem/1 var(--sans);letter-spacing:.13em;text-transform:uppercase;color:var(--ink2);transition:all .25s;white-space:nowrap}
+.chip:hover{color:var(--ink);border-color:var(--ln2)}
+.chip.on{color:var(--gold);border-color:var(--gold);background:rgba(200,161,113,.08)}
+.fcount{font:500 .64rem/1 var(--sans);letter-spacing:.12em;color:var(--ink3);text-transform:uppercase;white-space:nowrap}
+
+/* ── masonry ── */
+.gallery{padding:clamp(22px,4vh,44px) 0 clamp(70px,9vh,110px)}
+.masonry{columns:1;column-gap:14px}
+@media(min-width:560px){.masonry{columns:2}}@media(min-width:900px){.masonry{columns:3}}@media(min-width:1300px){.masonry{columns:4}}
+.ph{break-inside:avoid;margin-bottom:14px;position:relative;border-radius:6px;overflow:hidden;cursor:pointer}
+.ph::after{content:'';position:absolute;inset:0;border:1px solid transparent;border-radius:6px;transition:border-color .3s;pointer-events:none}
+.ph:hover::after{border-color:rgba(200,161,113,.65)}
+.ph img{width:100%;display:block;background:var(--sf);transition:transform .8s cubic-bezier(.2,0,.2,1)}
+.ph:hover img{transform:scale(1.03)}
+.ph-ov{position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.8) 0%,transparent 55%);opacity:0;transition:opacity .35s;display:flex;flex-direction:column;justify-content:flex-end;padding:26px 14px 12px}
+.ph:hover .ph-ov{opacity:1}
+.ph-title{font:400 italic 1.02rem/1.3 var(--serif)}
+.ph-sub{display:flex;justify-content:space-between;margin-top:5px;font:700 .58rem/1 var(--sans);letter-spacing:.15em;text-transform:uppercase;color:var(--gold)}
+.ph-sub span:last-child{color:var(--ink2)}
+.empty-msg{text-align:center;padding:90px 20px;color:var(--ink2)}
+.empty-msg p{font:400 italic 1.5rem/1.4 var(--serif);margin-bottom:10px}
+.empty-msg span{font-size:.85rem;color:var(--ink3)}
+
+/* ── viewer (split panel) ── */
+.vw{position:fixed;inset:0;z-index:200;background:rgba(5,5,6,.95);backdrop-filter:blur(8px);opacity:0;pointer-events:none;transition:opacity .3s;display:flex;align-items:center;justify-content:center;padding:16px}
+.vw.open{opacity:1;pointer-events:auto}
+.vw-box{display:flex;width:100%;max-width:1120px;max-height:92vh;background:var(--sf);border-radius:14px;overflow:hidden;box-shadow:0 40px 80px rgba(0,0,0,.6)}
+.vw-img{flex:1.3;background:#000;display:flex;align-items:center;justify-content:center;position:relative;min-height:360px}
+.vw-img img{max-width:100%;max-height:92vh;object-fit:contain;transition:opacity .35s}
+.vw-nav{position:absolute;top:50%;transform:translateY(-50%);width:42px;height:42px;border-radius:50%;background:rgba(0,0,0,.55);border:1px solid rgba(255,255,255,.16);display:grid;place-items:center;color:#fff;transition:all .2s}
+.vw-nav:hover{background:rgba(0,0,0,.85);border-color:rgba(255,255,255,.35)}.vw-nav.prev{left:14px}.vw-nav.next{right:14px}
+.vw-det{flex:1;padding:30px;overflow-y:auto;display:flex;flex-direction:column;max-width:400px;position:relative}
+.vw-close{position:absolute;top:14px;right:14px;width:34px;height:34px;border-radius:50%;background:var(--sf2);border:1px solid var(--ln);display:grid;place-items:center;color:var(--ink2);transition:all .2s;z-index:5}
+.vw-close:hover{color:var(--ink);border-color:var(--ln2)}
+.vw-brand{display:flex;align-items:center;gap:10px;margin-bottom:22px;padding-bottom:14px;border-bottom:1px solid var(--ln)}
+.vw-dot{width:28px;height:28px;border-radius:50%;background:var(--sf2);display:grid;place-items:center;font-size:12px}
+.vw-bname{font:600 .8rem/1 var(--sans)}
+.vw-title{font:600 1.45rem/1.3 var(--serif);margin-bottom:14px}
+.vw-dl{font:700 .6rem/1 var(--sans);letter-spacing:.15em;text-transform:uppercase;color:var(--ink3);margin-bottom:6px}
+.vw-desc{color:var(--ink2);font-size:.9rem;line-height:1.7;margin-bottom:20px}
+.vw-cam{font-size:.78rem;color:var(--gold);padding:10px 14px;background:var(--sf2);border-radius:8px;margin-bottom:20px}
+.vw-acts{display:flex;gap:10px;margin-bottom:20px;padding-bottom:20px;border-bottom:1px solid var(--ln)}
+.act{display:flex;align-items:center;gap:6px;padding:9px 14px;border-radius:8px;border:1px solid var(--ln);font:600 .74rem/1 var(--sans);transition:all .2s}
+.act:hover{border-color:var(--ink2);background:var(--sf2)}.act.liked{color:var(--red);border-color:var(--red)}
+.act svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2}.act.liked svg{fill:currentColor}
+.vw-chead{font:700 .6rem/1 var(--sans);letter-spacing:.15em;text-transform:uppercase;color:var(--ink3);margin-bottom:10px}
+.vw-clist{flex:1;overflow-y:auto;max-height:180px;margin-bottom:14px}
+.cmt{padding:9px 0;border-bottom:1px solid var(--ln)}.cmt:last-child{border:none}
+.cmt-a{font:600 .7rem/1 var(--sans);color:var(--gold);margin-bottom:3px}.cmt-t{font-size:.82rem;color:var(--ink2)}
+.cmt-form{display:flex;gap:8px}
+.cmt-inp{flex:1;background:var(--sf2);border:1px solid var(--ln);border-radius:8px;padding:10px 12px;color:var(--ink);font:400 .82rem/1.4 var(--sans)}
+.cmt-inp:focus{outline:none;border-color:var(--gold)}
+.cmt-btn{padding:10px 15px;background:var(--gold);color:var(--bg);border-radius:8px;font:700 .72rem/1 var(--sans)}
+@media(max-width:768px){.vw-box{flex-direction:column;max-height:96vh}.vw-img{min-height:250px;max-height:45vh}.vw-det{max-width:100%}}
+
+/* ─ about ── */
+.about-page{padding:calc(var(--hh) + clamp(50px,9vh,90px)) 0 clamp(70px,9vh,110px)}
+.about-grid{display:grid;grid-template-columns:200px 1fr;gap:clamp(32px,5vw,72px)}
+@media(max-width:768px){.about-grid{grid-template-columns:1fr;gap:24px}}
+.about-num{font:300 italic 2.6rem/1 var(--serif);color:var(--gold);margin-bottom:8px}
+.about-label{font:600 .65rem/1 var(--sans);letter-spacing:.22em;text-transform:uppercase;color:var(--ink3);position:sticky;top:calc(var(--hh) + 32px)}
+.about-body h2{font:300 clamp(1.8rem,3.6vw,2.9rem)/1.15 var(--serif);letter-spacing:-.01em;margin-bottom:28px}
+.about-body h2 em{font-style:italic;color:var(--gold)}
+.about-body p{color:var(--ink2);max-width:60ch;margin-bottom:18px;font-size:.95rem}
+.specs{margin-top:36px;display:grid;grid-template-columns:repeat(2,1fr);max-width:560px;border-top:1px solid var(--ln2)}
+.specs>div{display:flex;justify-content:space-between;gap:16px;padding:13px 0;border-bottom:1px solid var(--ln)}
+.specs dt{font:600 .6rem/2 var(--sans);letter-spacing:.17em;text-transform:uppercase;color:var(--ink3)}
+.specs dd{font:500 .8rem/2 var(--sans);text-align:right}
+
+/* ─ footer ─ */
+.ftr{border-top:1px solid var(--ln);padding:28px 0}
+.ftr-in{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:12px;font:500 .7rem/1.6 var(--sans);color:var(--ink3)}
+.ftr-social{display:inline-flex;align-items:center;gap:6px;color:var(--ink2);transition:color .2s}
+.ftr-social:hover{color:var(--gold)}
+
+/* ── admin  */
+.admin-page{padding:calc(var(--hh) + 44px) 0 70px;min-height:100vh}
+.login-card{max-width:380px;margin:60px auto;padding:38px;background:var(--sf);border:1px solid var(--ln);border-radius:12px}
+.login-card h2{font:300 1.75rem/1.1 var(--serif);margin-bottom:6px}.login-card>p{color:var(--ink2);font-size:.85rem;margin-bottom:24px}
+.fg{margin-bottom:14px}.fl{display:block;font:700 .6rem/1 var(--sans);letter-spacing:.15em;text-transform:uppercase;color:var(--ink3);margin-bottom:7px}
+.fi,.fsel,.fta{width:100%;background:var(--sf2);border:1px solid var(--ln);border-radius:6px;padding:11px 12px;color:var(--ink);font:400 .9rem/1.5 var(--sans);transition:border-color .2s}
+.fi:focus,.fsel:focus,.fta:focus{outline:none;border-color:var(--gold)}.fta{resize:vertical;min-height:70px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:11px 22px;border-radius:6px;font:700 .68rem/1 var(--sans);letter-spacing:.11em;text-transform:uppercase;transition:all .2s}
+.btn-p{background:var(--ink);color:var(--bg)}.btn-p:hover{background:var(--gold)}
+.btn-s{border:1px solid var(--ln2);color:var(--ink2)}.btn-s:hover{border-color:var(--ink2);color:var(--ink)}
+.btn-d{border:1px solid rgba(217,144,144,.35);color:var(--red)}.btn-d:hover{background:rgba(217,144,144,.08)}
+.btn-full{width:100%}.err{color:var(--red);font-size:.8rem;margin-top:6px}
+.dash-head{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:34px;flex-wrap:wrap;gap:16px}
+.dash-head h2{font:300 1.9rem/1.1 var(--serif)}.dash-head h2 em{font-style:italic;color:var(--gold)}.dash-head p{color:var(--ink2);margin-top:6px;font-size:.85rem}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;margin-bottom:28px}
+.st{background:var(--sf);border:1px solid var(--ln);border-radius:8px;padding:18px}
+.st b{display:block;font:300 1.9rem/1.2 var(--serif)}.st span{font:700 .58rem/1.9 var(--sans);letter-spacing:.16em;text-transform:uppercase;color:var(--ink3)}
+.tabs{display:flex;gap:4px;margin-bottom:28px;border-bottom:1px solid var(--ln)}
+.tab{padding:11px 18px;font:600 .68rem/1 var(--sans);letter-spacing:.11em;text-transform:uppercase;color:var(--ink3);border-bottom:2px solid transparent;transition:all .2s}
+.tab:hover{color:var(--ink)}.tab.on{color:var(--gold);border-color:var(--gold)}
+.pnl{background:var(--sf);border:1px solid var(--ln);border-radius:10px;padding:clamp(18px,3vw,28px);margin-bottom:20px}
+.pnl h3{font:400 1.2rem/1.2 var(--serif);margin-bottom:20px}
+.drop{border:2px dashed var(--ln2);border-radius:8px;padding:46px;text-align:center;cursor:pointer;transition:all .2s;margin-bottom:20px}
+.drop:hover,.drop.over{border-color:var(--gold);background:var(--sf2)}.drop p{color:var(--ink2);margin-top:10px;font-size:.85rem}
+.drop-prev{max-height:180px;margin:0 auto 20px;border-radius:8px}
+.frow{display:grid;grid-template-columns:1fr 1fr;gap:14px}@media(max-width:600px){.frow{grid-template-columns:1fr}}
+.lib-item{display:grid;grid-template-columns:56px 1fr auto;gap:14px;align-items:center;padding:14px 0;border-bottom:1px solid var(--ln)}
+.lib-thumb{width:56px;height:56px;object-fit:cover;border-radius:4px;background:var(--sf2)}
+.lib-info strong{display:block;font:400 italic .95rem/1.3 var(--serif)}.lib-info span{font-size:.72rem;color:var(--ink3)}
+.lib-acts{display:flex;gap:6px}
+.ib{width:34px;height:34px;display:grid;place-items:center;border:1px solid var(--ln);border-radius:6px;color:var(--ink3);transition:all .2s}
+.ib:hover{border-color:var(--ink2);color:var(--ink)}.ib.del:hover{border-color:var(--red);color:var(--red)}
+.col-item{display:flex;justify-content:space-between;align-items:center;padding:14px;background:var(--sf2);border-radius:8px;margin-bottom:8px}
+.col-name{font-weight:600;font-size:.9rem}.col-count{font-size:.74rem;color:var(--ink3)}
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(80px);background:var(--sf2);border:1px solid var(--ln2);padding:11px 22px;border-radius:8px;font:600 .8rem/1.4 var(--sans);z-index:300;opacity:0;transition:all .3s;pointer-events:none}
+.toast.show{transform:translateX(-50%) translateY(0);opacity:1}
+.modal-bg{position:fixed;inset:0;background:rgba(0,0,0,.82);z-index:250;display:grid;place-items:center;padding:16px}
+.modal-box{background:var(--sf);border:1px solid var(--ln2);border-radius:12px;padding:28px;max-width:480px;width:100%;max-height:88vh;overflow-y:auto}
+.modal-box h3{font:400 1.2rem/1.2 var(--serif);margin-bottom:18px}
+.modal-acts{display:flex;justify-content:flex-end;gap:10px;margin-top:20px}
+.spin{display:inline-block;width:16px;height:16px;border:2px solid var(--ln);border-top-color:var(--gold);border-radius:50%;animation:sp .6s linear infinite}@keyframes sp{to{transform:rotate(360deg)}}
+</style>
+</head>
+<body>
+<svg style="display:none">
+  <symbol id="i-heart" viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></symbol>
+  <symbol id="i-msg" viewBox="0 0 24 24"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></symbol>
+  <symbol id="i-dl" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></symbol>
+  <symbol id="i-x" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></symbol>
+  <symbol id="i-l" viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></symbol>
+  <symbol id="i-r" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></symbol>
+  <symbol id="i-ed" viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></symbol>
+  <symbol id="i-tr" viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></symbol>
+  <symbol id="i-pl" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></symbol>
+  <symbol id="i-pinterest" viewBox="0 0 24 24">
+    <path d="M12 0C5.373 0 0 5.373 0 12c0 5.084 3.163 9.426 7.627 11.174-.105-.949-.2-2.405.042-3.441.218-.937 1.407-5.965 1.407-5.965s-.359-.719-.359-1.782c0-1.668.967-2.914 2.171-2.914 1.023 0 1.518.769 1.518 1.69 0 1.029-.655 2.568-.994 3.995-.283 1.194.599 2.169 1.777 2.169 2.133 0 3.772-2.249 3.772-5.495 0-2.873-2.064-4.882-5.012-4.882-3.65 0-5.789 2.738-5.789 5.57 0 1.103.425 2.286.953 2.929.105.128.12.24.089.373-.098.403-.316 1.293-.359 1.475-.056.238-.189.288-.436.174-1.627-.758-2.645-3.135-2.645-5.046 0-4.114 2.987-7.89 8.614-7.89 4.515 0 8.03 3.221 8.03 7.537 0 4.499-2.838 8.122-6.778 8.122-1.324 0-2.568-.687-2.996-1.501l-.816 3.106c-.295 1.137-1.095 2.565-1.627 3.438C9.28 23.795 10.607 24 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0z"/>
+  </symbol>
+</svg>
+
+<header class="hdr" id="hdr"><div class="wrap hdr-in"><a href="#/" class="logo">Through <em>Harsh's</em> Lens</a><nav class="nav"><a href="#/" data-p="home">Explore</a><a href="#/about" data-p="about">About</a></nav></div></header>
+
+<!-- HOME -->
+<div class="page active" id="pgHome">
+<section class="hero">
+  <img class="hero-img" id="heroImg" alt="">
+  <div class="hero-shade"></div>
+  <div class="hero-in"><div class="wrap">
+    <p class="eyebrow fade-up">A personal photography archive</p>
+    <h1 class="fade-up">Through <em>Harsh's</em> Lens</h1>
+    <div class="hero-meta fade-up"><span>Harsh Barve</span><i></i><span>Nikon D3500</span><i></i><span id="frameCount">0 frames</span></div>
+  </div></div>
+  <span class="hero-latest" id="heroLatest" hidden></span>
+  <div class="scroll-hint"></div>
+</section>
+<div class="fbar"><div class="wrap fbar-in"><div class="chips" id="chips"></div><span class="fcount" id="fcount"></span></div></div>
+<section class="gallery wrap"><div class="masonry" id="grid"></div><div class="empty-msg" id="emptyMsg" hidden><p>No photographs yet</p><span>The collection is being built. Check back soon.</span></div></section>
+<footer class="ftr"><div class="wrap ftr-in">
+  <span>© 2026 Through Harsh's Lens</span>
+  <div style="display:flex;align-items:center;gap:16px">
+    <span>Photographs by Harsh Barve · Nikon D3500</span>
+    <a href="https://pin.it/7em9SCwBZ" target="_blank" rel="noopener noreferrer" aria-label="Pinterest" class="ftr-social">
+      <svg width="18" height="18"><use href="#i-pinterest"/></svg>
+    </a>
+  </div>
+</div></footer>
+</div>
+
+<!-- ABOUT -->
+<div class="page" id="pgAbout">
+<section class="about-page wrap"><div class="about-grid">
+<div class="about-label fade-up"><div class="about-num">01</div>About</div>
+<div class="about-body">
+  <h2 class="fade-up">The person <em>behind the lens</em></h2>
+  <p class="fade-up">I'm Harsh Barve. This site began as a simple habit — walking out with the camera, paying a little more attention to the light, and keeping the frames that stayed with me. <em style="font-style:italic;color:var(--gold)">Through Harsh's Lens</em> is that habit, made public.</p>
+  <p class="fade-up">Almost everything here is made with a Nikon D3500. It isn't the newest body on the shelf, but it taught me that the camera matters far less than the looking. Most of these photographs were made slowly, in available light, without much interference afterwards.</p>
+  <p class="fade-up">The collection is organised loosely — streets, nature, architecture, people and the odd experiment — but the thread is the same: honest moments, kept honestly. New frames are added as they earn their place.</p>
+  <dl class="specs fade-up"><div><dt>Project</dt><dd>Through Harsh's Lens</dd></div><div><dt>Founded by</dt><dd>Harsh Barve</dd></div><div><dt>Camera</dt><dd>Nikon D3500</dd></div><div><dt>Purpose</dt><dd>Personal portfolio &amp; showcase</dd></div></dl>
+</div></div></section>
+<footer class="ftr"><div class="wrap ftr-in">
+  <span>© 2026 Through Harsh's Lens</span>
+  <div style="display:flex;align-items:center;gap:16px">
+    <span>Photographs by Harsh Barve · Nikon D3500</span>
+    <a href="https://pin.it/7em9SCwBZ" target="_blank" rel="noopener noreferrer" aria-label="Pinterest" class="ftr-social">
+      <svg width="18" height="18"><use href="#i-pinterest"/></svg>
+    </a>
+  </div>
+</div></footer>
+</div>
+
+<!-- ADMIN (SECRET) -->
+<div class="page" id="pgAdmin"><div class="admin-page wrap">
+<div id="loginBox"><div class="login-card"><h2>Owner Access</h2><p>Restricted area. Authorized personnel only.</p><form id="loginForm"><div class="fg"><label class="fl">Owner ID</label><input class="fi" id="lUser" autocomplete="off" required></div><div class="fg"><label class="fl">Access Key</label><input type="password" class="fi" id="lPass" autocomplete="off" required></div><div class="err" id="lErr" hidden>Invalid credentials</div><button type="submit" class="btn btn-p btn-full" style="margin-top:14px" id="lBtn">Authenticate</button></form><a href="#/" style="display:block;margin-top:14px;font-size:.75rem;color:var(--ink3)">← Return to gallery</a></div></div>
+<div id="dashBox" hidden>
+<div class="dash-head"><div><h2>Control <em>Panel</em></h2><p>Everything you publish appears in the public gallery immediately.</p></div><div style="display:flex;gap:10px"><a href="#/" class="btn btn-s">View Site</a><button class="btn btn-s" id="logoutBtn">Lock</button></div></div>
+<div class="stats" id="statsBox"></div>
+<div class="tabs"><button class="tab on" data-t="photos">Photographs</button><button class="tab" data-t="cols">Collections</button><button class="tab" data-t="sets">Settings</button></div>
+<div id="tPhotos">
+  <div class="pnl"><h3>Upload Photograph</h3>
+    <div class="drop" id="dropZone"><input type="file" id="fileIn" accept="image/*" hidden><svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="color:var(--ink3)"><use href="#i-pl"/></svg><p>Drop image here or click to browse</p></div>
+    <img id="dropPrev" class="drop-prev" hidden>
+    <form id="upForm"><div class="frow"><div class="fg"><label class="fl">Title</label><input class="fi" id="uTitle" placeholder="Untitled" required></div><div class="fg"><label class="fl">Category</label><select class="fsel" id="uCat"></select></div></div><div class="fg"><label class="fl">Collection</label><select class="fsel" id="uCol"><option value="">None</option></select></div><div class="fg"><label class="fl">Camera</label><input class="fi" id="uCam" value="Nikon D3500"></div><div class="fg"><label class="fl">Description</label><textarea class="fta" id="uDesc" placeholder="Optional..."></textarea></div><button type="submit" class="btn btn-p" id="uBtn" disabled>Publish</button></form>
+  </div>
+  <div class="pnl"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px"><h3 style="margin-bottom:0">Library</h3><select class="fsel" id="libF" style="width:auto;padding:8px 28px 8px 10px;font-size:.75rem"></select></div><div id="libList"></div></div>
+</div>
+<div id="tCols" hidden>
+  <div class="pnl"><h3>Create Collection</h3><form id="colForm" style="display:flex;gap:10px;align-items:flex-end"><div class="fg" style="flex:1;margin-bottom:0"><label class="fl">Name</label><input class="fi" id="colName" required></div><button type="submit" class="btn btn-p">Create</button></form></div>
+  <div class="pnl"><h3>Collections</h3><div id="colList"></div></div>
+</div>
+<div id="tSets" hidden><div class="pnl"><h3>Change Credentials</h3><form id="credForm"><div class="fg"><label class="fl">Current Key</label><input type="password" class="fi" id="cOld" required></div><div class="frow"><div class="fg"><label class="fl">New Owner ID</label><input class="fi" id="cUser" required></div><div class="fg"><label class="fl">New Key</label><input type="password" class="fi" id="cPass" required minlength="6"></div></div><button type="submit" class="btn btn-s">Update</button></form></div></div>
+</div></div></div>
+
+<!-- VIEWER -->
+<div class="vw" id="vw"><div class="vw-box">
+<div class="vw-img"><button class="vw-nav prev" id="vPrev"><svg width="22" height="22"><use href="#i-l"/></svg></button><img id="vImg" alt=""><button class="vw-nav next" id="vNext"><svg width="22" height="22"><use href="#i-r"/></svg></button></div>
+<div class="vw-det"><button class="vw-close" id="vClose">
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="display:block;margin:auto">
+    <line x1="18" y1="6" x2="6" y2="18"></line>
+    <line x1="6" y1="6" x2="18" y2="18"></line>
+  </svg>
+</button>
+<div class="vw-brand"><div class="vw-dot"></div><div class="vw-bname">Through Harsh's Lens</div></div>
+<div class="vw-title" id="vTitle"></div>
+<div class="vw-dl">Description</div><div class="vw-desc" id="vDesc"></div>
+<div class="vw-cam" id="vCam"></div>
+<div class="vw-acts"><button class="act" id="likeBtn"><svg><use href="#i-heart"/></svg><span id="likeN">0</span></button><button class="act" id="cmtBtn"><svg><use href="#i-msg"/></svg><span id="cmtN">0</span></button><button class="act" id="dlBtn"><svg><use href="#i-dl"/></svg><span>Save</span></button></div>
+<div class="vw-chead">Comments</div><div class="vw-clist" id="cmtList"></div>
+<form class="cmt-form" id="cmtForm"><input class="cmt-inp" id="cmtInp" placeholder="Add a comment..." maxlength="500" required><button type="submit" class="cmt-btn">Post</button></form>
+</div></div></div>
+<div id="modalRoot"></div><div class="toast" id="toast"></div>
+
+<script>
+const SB_URL='https://atpuhdrlwutleynljoha.supabase.co';
+const SB_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImF0cHVoZHJsd3V0bGV5bmxqb2hhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODY1MzUzNjYsImV4cCI6MjEwMjExMTM2Nn0.F7BqV6bAvqzsjgvkDw2_Aa0_JP5I0DW6FCsP2WyHbvQ';
+const sb=supabase.createClient(SB_URL,SB_KEY);
+const CATS=['All','Street','Nature','Architecture','People','Experimental','Other'];
+const SECRET='#/admin';
+const DEF={u:'harsh@owner',p:'ThL$2024!secure'};
+const HERO_FALLBACK='data:image/svg+xml,'+encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1000"><rect width="1600" height="1000" fill="#0b0b0c"/><circle cx="800" cy="470" r="230" fill="none" stroke="#1c1a17" stroke-width="60"/><circle cx="800" cy="470" r="90" fill="#141210"/></svg>');
+const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+function toast(m){const t=$('#toast');t.textContent=m;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2500)}
+function fmtD(d){return new Date(d).toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric'})}
+async function H(s){if(crypto.subtle){const b=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(s));return[...new Uint8Array(b)].map(x=>x.toString(16).padStart(2,'0')).join('')}let h=5381;for(let i=0;i<s.length;i++)h=((h<<5)+h+s.charCodeAt(i))>>>0;return'h'+h.toString(16)}
+
+async function procImg(file){if(!file.type.startsWith('image/'))throw new Error('Not an image');const u=URL.createObjectURL(file);const img=await new Promise((r,j)=>{const i=new Image();i.onload=()=>r(i);i.onerror=j;i.src=u});const ratio=img.naturalWidth/img.naturalHeight;const rz=(mx,q)=>{const s=Math.min(1,mx/Math.max(img.naturalWidth,img.naturalHeight));const c=document.createElement('canvas');c.width=Math.round(img.naturalWidth*s);c.height=Math.round(img.naturalHeight*s);const x=c.getContext('2d');x.fillStyle='#111';x.fillRect(0,0,c.width,c.height);x.drawImage(img,0,0,c.width,c.height);return c.toDataURL('image/jpeg',q)};URL.revokeObjectURL(u);return{full:rz(1800,.85),thumb:rz(600,.75),ratio}}
+async function upStore(dataUrl,nm){const r=await fetch(dataUrl);const bl=await r.blob();const p=`${Date.now()}_${nm}`;const{error}=await sb.storage.from('photos').upload(p,bl,{contentType:'image/jpeg'});if(error)throw new Error(error.message);const{data:{publicUrl}}=sb.storage.from('photos').getPublicUrl(p);return publicUrl}
+
+const DB={
+  async photos(){const{data}=await sb.from('photos').select('*').order('created_at',{ascending:false});return data||[]},
+  async cols(){const{data}=await sb.from('collections').select('*').order('created_at',{ascending:false});return data||[]},
+  async cmts(pid){const{data}=await sb.from('comments').select('*').eq('photo_id',pid).order('created_at');return data||[]},
+  async getLike(pid){const{data}=await sb.from('likes').select('count').eq('photo_id',pid).single();return data?.count||0},
+  async addPhoto(p){const{error}=await sb.from('photos').insert(p);if(error)throw error},
+  async updPhoto(id,p){const{error}=await sb.from('photos').update(p).eq('id',id);if(error)throw error},
+  async delPhoto(id){const{data:ph}=await sb.from('photos').select('src_url,thumb_url').eq('id',id).single();if(ph){const ps=[ph.src_url,ph.thumb_url].map(u=>{try{return u.split('/photos/')[1]}catch{return null}}).filter(Boolean);if(ps.length)await sb.storage.from('photos').remove(ps)}const{error}=await sb.from('photos').delete().eq('id',id);if(error)throw error},
+  async addCol(n){const{error}=await sb.from('collections').insert({name:n});if(error)throw error},
+  async delCol(id){const{error}=await sb.from('collections').delete().eq('id',id);if(error)throw error},
+  async addCmt(pid,body){const{error}=await sb.from('comments').insert({photo_id:pid,body,author_name:'Visitor'});if(error)throw error},
+  async togLike(pid,unlike){if(unlike){const{data}=await sb.rpc('decrement_likes',{pid:pid});return data||0}else{const{data}=await sb.rpc('increment_likes',{pid:pid});return data||0}}
+};
+
+const Auth={creds:null,
+  async init(){let s=localStorage.getItem('thl_c');if(!s){s=JSON.stringify({uh:await H(DEF.u),ph:await H(DEF.p)});localStorage.setItem('thl_c',s)}this.creds=JSON.parse(s)},
+  async verify(u,p){return await H(u)===this.creds.uh&&await H(p)===this.creds.ph},
+  async update(u,p){this.creds={uh:await H(u),ph:await H(p)};localStorage.setItem('thl_c',JSON.stringify(this.creds))},
+  login(){sessionStorage.setItem('thl_s','1')},logout(){sessionStorage.removeItem('thl_s')},
+  ok(){return sessionStorage.getItem('thl_s')==='1'}
+};
+
+const Gal={filter:'All',photos:[],
+  async load(){this.photos=await DB.photos();this.hero();this.chips();this.render()},
+  hero(){const latest=this.photos[0];const img=$('#heroImg');if(latest){img.src=latest.src_url;const hl=$('#heroLatest');hl.hidden=false;hl.innerHTML='<b>Latest frame</b>'+esc(latest.title)}else{img.src=HERO_FALLBACK;$('#heroLatest').hidden=true}const t=this.photos.length;$('#frameCount').textContent=t+' '+(t===1?'frame':'frames')},
+  chips(){const ct={};this.photos.forEach(p=>{ct[p.category]=(ct[p.category]||0)+1});const tot=this.photos.length;$('#chips').innerHTML=CATS.map(c=>{const n=c==='All'?tot:(ct[c]||0);if(c!=='All'&&n===0)return'';return`<button class="chip${this.filter===c?' on':''}" data-c="${c}">${c} (${n})</button>`}).join('');$('#fcount').textContent=tot+' '+(tot===1?'frame':'frames')},
+  render(){const list=this.filter==='All'?this.photos:this.photos.filter(p=>p.category===this.filter);if(!list.length){$('#grid').innerHTML='';$('#emptyMsg').hidden=false;return}$('#emptyMsg').hidden=true;$('#grid').innerHTML=list.map(p=>`<article class="ph fade-up" data-id="${p.id}"><img src="${p.thumb_url}" alt="${esc(p.title)}" loading="lazy" style="aspect-ratio:${p.ratio||1}"><div class="ph-ov"><div class="ph-title">${esc(p.title)}</div><div class="ph-sub"><span>${esc(p.category)}</span><span>♥ ${p.like_count||0}</span></div></div></article>`).join('');observe()},
+  init(){$('#chips').addEventListener('click',e=>{const b=e.target.closest('.chip');if(b){this.filter=b.dataset.c;this.chips();this.render()}});$('#grid').addEventListener('click',e=>{const c=e.target.closest('.ph');if(c)Vw.open(c.dataset.id)})}
+};
+
+const Vw={photos:[],idx:0,
+  async open(id){const all=Gal.filter==='All'?Gal.photos:Gal.photos.filter(p=>p.category===Gal.filter);this.photos=all;this.idx=all.findIndex(p=>p.id===id);if(this.idx<0)return;$('#vw').classList.add('open');document.body.classList.add('locked');await this.show()},
+  close(){$('#vw').classList.remove('open');document.body.classList.remove('locked')},
+  async nav(d){if(this.photos.length<2)return;this.idx=(this.idx+d+this.photos.length)%this.photos.length;await this.show()},
+  async show(){const p=this.photos[this.idx];const img=$('#vImg');img.style.opacity='0';img.onload=()=>img.style.opacity='1';img.src=p.src_url;img.alt=p.title||'';$('#vTitle').textContent=p.title||'Untitled';$('#vDesc').textContent=p.description||'No description.';$('#vCam').textContent=`📷 ${p.camera||'Nikon D3500'} · ${fmtD(p.created_at)}`;const lc=await DB.getLike(p.id);$('#likeN').textContent=lc;$('#likeBtn').classList.toggle('liked',lc>0);const cs=await DB.cmts(p.id);$('#cmtN').textContent=cs.length;$('#cmtList').innerHTML=cs.length?cs.map(c=>`<div class="cmt"><div class="cmt-a">${esc(c.author_name)}</div><div class="cmt-t">${esc(c.body)}</div></div>`).join(''):'<p style="color:var(--ink3);font-size:.8rem">No comments yet.</p>';if(this.photos.length>1){const nx=this.photos[(this.idx+1)%this.photos.length];const pre=new Image();pre.src=nx.src_url}},
+  init(){$('#vClose').onclick=()=>this.close();$('#vPrev').onclick=()=>this.nav(-1);$('#vNext').onclick=()=>this.nav(1);$('#vw').onclick=e=>{if(e.target===$('#vw'))this.close()};document.addEventListener('keydown',e=>{if(!$('#vw').classList.contains('open'))return;if(e.key==='Escape')this.close();if(e.key==='ArrowLeft')this.nav(-1);if(e.key==='ArrowRight')this.nav(1)});
+    let x0=null;const st=$('.vw-img');st.addEventListener('touchstart',e=>{x0=e.touches[0].clientX},{passive:true});st.addEventListener('touchend',e=>{if(x0===null)return;const dx=e.changedTouches[0].clientX-x0;if(Math.abs(dx)>48)this.nav(dx<0?1:-1);x0=null},{passive:true});
+    $('#likeBtn').onclick=async()=>{const p=this.photos[this.idx];const isLiked=$('#likeBtn').classList.contains('liked');const c=await DB.togLike(p.id,isLiked);$('#likeN').textContent=c;$('#likeBtn').classList.toggle('liked');Gal.load()};
+    $('#cmtBtn').onclick=()=>$('#cmtInp').focus();
+    $('#cmtForm').onsubmit=async e=>{e.preventDefault();const inp=$('#cmtInp');const t=inp.value.trim();if(!t)return;await DB.addCmt(this.photos[this.idx].id,t);inp.value='';const cs=await DB.cmts(this.photos[this.idx].id);$('#cmtN').textContent=cs.length;$('#cmtList').innerHTML=cs.map(c=>`<div class="cmt"><div class="cmt-a">${esc(c.author_name)}</div><div class="cmt-t">${esc(c.body)}</div></div>`).join('');toast('Comment added')};
+    $('#dlBtn').onclick=async()=>{const p=this.photos[this.idx];try{const r=await fetch(p.src_url);const b=await r.blob();const u=URL.createObjectURL(b);const a=document.createElement('a');a.href=u;a.download=`${(p.title||'photo').replace(/[^a-z0-9]/gi,'_')}.jpg`;a.click();URL.revokeObjectURL(u);toast('Download started')}catch{toast('Download failed')}}}
+};
+
+const Adm={pending:null,
+  showLogin(){$('#loginBox').hidden=false;$('#dashBox').hidden=true;$('#lErr').hidden=true},
+  async showDash(){$('#loginBox').hidden=true;$('#dashBox').hidden=false;await this.stats();this.tab('photos')},
+  tab(t){$$('.tab').forEach(x=>x.classList.toggle('on',x.dataset.t===t));$('#tPhotos').hidden=t!=='photos';$('#tCols').hidden=t!=='cols';$('#tSets').hidden=t!=='sets';if(t==='photos')this.lib();if(t==='cols')this.cols()},
+  async stats(){const ps=await DB.photos();const cs=await DB.cols();$('#statsBox').innerHTML=`<div class="st"><b>${ps.length}</b><span>Photos</span></div><div class="st"><b>${cs.length}</b><span>Collections</span></div><div class="st"><b>${new Set(ps.map(p=>p.category)).size}</b><span>Categories</span></div>`},
+  async lib(){const f=$('#libF').value;let ps=await DB.photos();if(f!=='All')ps=ps.filter(p=>p.category===f);const cs=await DB.cols();$('#libList').innerHTML=ps.length?ps.map(p=>{const col=cs.find(c=>c.id===p.collection_id);return`<div class="lib-item"><img class="lib-thumb" src="${p.thumb_url}" loading="lazy"><div class="lib-info"><strong>${esc(p.title)}</strong><span>${esc(p.category)}${col?' · '+esc(col.name):''} · ${fmtD(p.created_at)}</span></div><div class="lib-acts"><button class="ib" data-a="ed" data-id="${p.id}"><svg width="14" height="14"><use href="#i-ed"/></svg></button><button class="ib del" data-a="dl" data-id="${p.id}"><svg width="14" height="14"><use href="#i-tr"/></svg></button></div></div>`}).join(''):'<p style="color:var(--ink3);padding:16px 0;font-size:.85rem">No photos yet.</p>'},
+  async cols(){const cs=await DB.cols();const ps=await DB.photos();$('#colList').innerHTML=cs.length?cs.map(c=>`<div class="col-item"><div><div class="col-name">${esc(c.name)}</div><div class="col-count">${ps.filter(p=>p.collection_id===c.id).length} photos</div></div><button class="ib del" data-a="dc" data-id="${c.id}"><svg width="14" height="14"><use href="#i-tr"/></svg></button></div>`).join(''):'<p style="color:var(--ink3);font-size:.85rem">No collections.</p>'},
+  async popSel(){const co=CATS.filter(c=>c!=='All').map(c=>`<option>${esc(c)}</option>`).join('');$('#uCat').innerHTML=co;$('#libF').innerHTML='<option>All</option>'+co;const cs=await DB.cols();$('#uCol').innerHTML='<option value="">None</option>'+cs.map(c=>`<option value="${c.id}">${esc(c.name)}</option>`).join('')},
+  reset(){this.pending=null;$('#fileIn').value='';$('#dropPrev').hidden=true;$('#dropZone').style.display='';$('#uBtn').disabled=true;$('#upForm').reset();$('#uCam').value='Nikon D3500'},
+  modal(title,msg,fn){const m=document.createElement('div');m.className='modal-bg';m.innerHTML=`<div class="modal-box"><h3>${title}</h3><p style="color:var(--ink2);margin-bottom:16px;font-size:.9rem">${msg}</p><div class="modal-acts"><button class="btn btn-s" data-c>Cancel</button><button class="btn btn-d" data-y>Delete</button></div></div>`;m.querySelector('[data-c]').onclick=()=>m.remove();m.querySelector('[data-y]').onclick=()=>{m.remove();fn()};m.onclick=e=>{if(e.target===m)m.remove()};$('#modalRoot').appendChild(m)},
+  async edModal(photo){const cs=await DB.cols();const co='<option value="">None</option>'+cs.map(c=>`<option value="${c.id}"${c.id===photo.collection_id?' selected':''}>${esc(c.name)}</option>`).join('');const m=document.createElement('div');m.className='modal-bg';m.innerHTML=`<div class="modal-box"><h3>Edit Photo</h3><form id="ef"><div class="fg"><label class="fl">Title</label><input class="fi" name="title" value="${esc(photo.title)}" required></div><div class="frow"><div class="fg"><label class="fl">Category</label><select class="fsel" name="cat">${CATS.filter(c=>c!=='All').map(c=>`<option${c===photo.category?' selected':''}>${c}</option>`).join('')}</select></div><div class="fg"><label class="fl">Collection</label><select class="fsel" name="col">${co}</select></div></div><div class="fg"><label class="fl">Camera</label><input class="fi" name="cam" value="${esc(photo.camera||'')}"></div><div class="fg"><label class="fl">Description</label><textarea class="fta" name="desc">${esc(photo.description||'')}</textarea></div><div class="modal-acts"><button type="button" class="btn btn-s" data-c>Cancel</button><button type="submit" class="btn btn-p">Save</button></div></form></div>`;m.querySelector('[data-c]').onclick=()=>m.remove();m.querySelector('#ef').onsubmit=async e=>{e.preventDefault();const fd=new FormData(e.target);await DB.updPhoto(photo.id,{title:fd.get('title'),category:fd.get('cat'),collection_id:fd.get('col')||null,camera:fd.get('cam'),description:fd.get('desc')});m.remove();await this.lib();await this.stats();await Gal.load();toast('Updated')};m.onclick=e=>{if(e.target===m)m.remove()};$('#modalRoot').appendChild(m)},
+  init(){
+    $('#loginForm').onsubmit=async e=>{e.preventDefault();$('#lBtn').innerHTML='<span class="spin"></span>';if(await Auth.verify($('#lUser').value,$('#lPass').value)){Auth.login();$('#lPass').value='';await this.showDash();toast('Access granted')}else{$('#lErr').hidden=false}$('#lBtn').textContent='Authenticate'};
+    $('#logoutBtn').onclick=()=>{Auth.logout();this.showLogin();toast('Locked')};
+    $$('.tab').forEach(t=>t.onclick=()=>this.tab(t.dataset.t));
+    const z=$('#dropZone'),fi=$('#fileIn');z.onclick=()=>fi.click();z.ondragover=e=>{e.preventDefault();z.classList.add('over')};z.ondragleave=()=>z.classList.remove('over');z.ondrop=e=>{e.preventDefault();z.classList.remove('over');if(e.dataTransfer.files[0])this.handleFile(e.dataTransfer.files[0])};fi.onchange=()=>{if(fi.files[0])this.handleFile(fi.files[0])};
+    $('#upForm').onsubmit=async e=>{e.preventDefault();if(!this.pending)return;$('#uBtn').innerHTML='<span class="spin"></span> Uploading...';try{const src=await upStore(this.pending.full,'f.jpg');const th=await upStore(this.pending.thumb,'t.jpg');await DB.addPhoto({title:$('#uTitle').value.trim()||'Untitled',category:$('#uCat').value,collection_id:$('#uCol').value||null,camera:$('#uCam').value.trim()||'Nikon D3500',description:$('#uDesc').value.trim(),src_url:src,thumb_url:th,ratio:this.pending.ratio,like_count:0});this.reset();await this.stats();await this.lib();await Gal.load();toast('Published!')}catch(err){toast(err.message)}finally{$('#uBtn').textContent='Publish'}};
+    $('#libList').onclick=e=>{const b=e.target.closest('[data-a]');if(!b)return;if(b.dataset.a==='ed'){DB.photos().then(ps=>{const p=ps.find(x=>x.id===b.dataset.id);if(p)this.edModal(p)})}if(b.dataset.a==='dl'){this.modal('Delete Photo','This cannot be undone.',async()=>{await DB.delPhoto(b.dataset.id);await this.stats();await this.lib();await Gal.load();toast('Deleted')})}};
+    $('#colForm').onsubmit=async e=>{e.preventDefault();const n=$('#colName').value.trim();if(n){await DB.addCol(n);$('#colName').value='';await this.popSel();await this.cols();await this.stats();toast('Created')}};
+    $('#colList').onclick=e=>{const b=e.target.closest('[data-a="dc"]');if(!b)return;this.modal('Delete Collection','Photos become uncategorized.',async()=>{await DB.delCol(b.dataset.id);await this.popSel();await this.cols();await this.stats();toast('Deleted')})};
+    $('#credForm').onsubmit=async e=>{e.preventDefault();if(await H($('#cOld').value)!==Auth.creds.ph){toast('Wrong current key');return}if($('#cPass').value.length<6){toast('Min 6 characters');return}await Auth.update($('#cUser').value.trim(),$('#cPass').value);e.target.reset();toast('Credentials updated')}
+  },
+  async handleFile(f){try{const r=await procImg(f);this.pending=r;$('#dropPrev').src=r.thumb;$('#dropPrev').hidden=false;$('#dropZone').style.display='none';$('#uBtn').disabled=false}catch(e){toast(e.message)}}
+};
+
+const io=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}})},{threshold:.06});
+function observe(){$$('.fade-up:not(.in)').forEach(el=>io.observe(el))}
+
+function route(){
+  const hash=location.hash||'#/';
+  $$('.page').forEach(p=>p.classList.remove('active'));
+  $$('.nav a').forEach(a=>a.classList.remove('active'));
+  if(hash===SECRET){$('#pgAdmin').classList.add('active');Auth.ok()?Adm.showDash():Adm.showLogin()}
+  else if(hash==='#/about'){$('#pgAbout').classList.add('active');$('.nav a[data-p="about"]').classList.add('active');observe()}
+  else{$('#pgHome').classList.add('active');$('.nav a[data-p="home"]').classList.add('active');Gal.load();observe()}
+  window.scrollTo(0,0);
+}
+
+(async function(){
+  await Auth.init();
+  window.addEventListener('scroll',()=>$('#hdr').classList.toggle('scrolled',window.scrollY>10),{passive:true});
+  Gal.init();Vw.init();Adm.init();await Adm.popSel();
+  window.addEventListener('hashchange',route);
+  route();
+})();
+</script>
+</body>
+</html>
